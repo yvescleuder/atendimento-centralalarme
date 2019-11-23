@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Agent;
 use App\Attendance;
 use App\Company;
-use App\Http\Requests\StoreAttendance;
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -31,7 +32,10 @@ class AttendanceController extends Controller
     {
         $companies = Company::all();
         $agents = Agent::all();
-        return view('attendance.create', ['companies' => $companies, 'agents' => $agents]);
+        $requesters = Attendance::groupBy('requester')
+            ->selectRaw('requester as name')
+            ->get();
+        return view('attendance.create', ['companies' => $companies, 'agents' => $agents, 'requesters' => $requesters]);
     }
 
     /**
@@ -40,9 +44,8 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAttendance $request)
+    public function store(StoreAttendanceRequest $request)
     {
-
         Attendance::create($request->all() + ['user_id' => 1]);
         return redirect()->route('attendance.index')->withSuccess('Atendimento finalizado!');
     }
@@ -79,7 +82,7 @@ class AttendanceController extends Controller
      * @param  \App\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attendance $attendance)
+    public function update(UpdateAttendanceRequest $request, Attendance $attendance)
     {
         $attendance = Attendance::find($attendance->id);
         $attendance->update($request->all());

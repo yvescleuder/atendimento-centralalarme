@@ -51,7 +51,7 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Local (Cliente) <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?">
+                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?" value="{{ old('client') }}">
                                         @if ($errors->has('client'))
                                             <div class="text-small text-danger">{{ $errors->first('client') }}</div>
                                         @endif
@@ -60,7 +60,12 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Solicitante <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="requester" class="form-control" placeholder="Quem fez a solicitação de atendimento?">
+                                        <select type="text" name="requester" class="form-control requester">
+                                            <option value=""></option>
+                                            @foreach($requesters as $requester)
+                                                <option value="{{ $requester->name }}" {{ (old('requester') == $requester->name) ? 'selected' : '' }}>{{ $requester->name }}</option>
+                                            @endforeach
+                                        </select>
                                         @if ($errors->has('requester'))
                                             <div class="text-small text-danger">{{ $errors->first('requester') }}</div>
                                         @endif
@@ -126,10 +131,10 @@
                                     <div class="form-group">
                                         <label>Observações <span class="text-danger font-weight-bold">*</span></label>
                                         <textarea name="note" class="form-control" rows="5">{{ old('note') }}</textarea>
+                                        @if ($errors->has('note'))
+                                            <div class="text-small text-danger">{{ $errors->first('note') }}</div>
+                                        @endif
                                     </div>
-                                    @if ($errors->has('note'))
-                                        <div class="text-small text-danger">{{ $errors->first('note') }}</div>
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -148,9 +153,16 @@
     <!-- DateTimePicker -->
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/moment/moment.min.js"></script>
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+    <!-- Select2 -->
+    <script src="http://demo.themekita.com/atlantis/livepreview/examples/assets/js/plugin/select2/select2.full.min.js"></script>
     <script>
         $('.timepicker').datetimepicker({
             format: 'HH:mm',
+        });
+        $(".requester").select2({
+            tags: true,
+            theme: "bootstrap",
+            placeholder: "Quem fez a solicitação de atendimento?"
         });
     </script>
 @endsection

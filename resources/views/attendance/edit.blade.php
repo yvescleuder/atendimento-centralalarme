@@ -41,21 +41,36 @@
                                         <select name="company_id" class="form-control">
                                             <option>-- Selecione</option>
                                             @foreach($companies as $company)
-                                                <option value="{{ $company->id }}" {{ ($attendance->company_id == $company->id) ? 'selected' : ''}}>{{ $company->name }}</option>
+                                                @if(old('company_id') == $company->id)
+                                                    <option value="{{ $company->id }}" selected>{{ $company->name }}</option>
+                                                @elseif(($company->id == $attendance->company_id) and is_null(old('company_id')))
+                                                    <option value="{{ $company->id }}" selected>{{ $company->name }}</option>
+                                                @else
+                                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
+                                        @if ($errors->has('company_id'))
+                                            <div class="text-small text-danger">{{ $errors->first('company_id') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Local (Cliente) <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?" value="{{ $attendance->client }}">
+                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?" value="{{ old('client') ? old('client') : $attendance->client }}">
+                                        @if ($errors->has('client'))
+                                            <div class="text-small text-danger">{{ $errors->first('client') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Solicitante <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="requester" class="form-control" placeholder="Quem fez a solicitação de atendimento?" value="{{ $attendance->requester }}">
+                                        <input type="text" name="requester" class="form-control" placeholder="Quem fez a solicitação de atendimento?" value="{{ old('requester') ? old('requester') : $attendance->requester }}">
+                                        @if ($errors->has('requester'))
+                                            <div class="text-small text-danger">{{ $errors->first('requester') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
@@ -64,19 +79,31 @@
                                         <select name="agent_id" class="form-control">
                                             <option>-- Selecione</option>
                                             @foreach($agents as $agent)
-                                                <option value="{{ $agent->id }}" {{ ($attendance->agent_id == $agent->id) ? 'selected' : ''}}>{{ $agent->name }}</option>
+                                                @if(old('agent_id') == $agent->id)
+                                                    <option value="{{ $agent->id }}" selected>{{ $agent->name }}</option>
+                                                @elseif(($agent->id == $attendance->agent_id) and is_null(old('agent_id')))
+                                                    <option value="{{ $agent->id }}" selected>{{ $agent->name }}</option>
+                                                @else
+                                                    <option value="{{ $agent->id }}">{{ $agent->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
+                                        @if ($errors->has('agent_id'))
+                                            <div class="text-small text-danger">{{ $errors->first('agent_id') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Horário de acionamento <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_trigger" type="text" class="form-control timepicker" value="{{ $attendance->time_trigger }}">
+                                            <input name="time_trigger" type="text" class="form-control timepicker" value="{{ old('time_trigger') ? old('time_trigger') : $attendance->time_trigger }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
+                                            @if ($errors->has('time_trigger'))
+                                                <div class="text-small text-danger">{{ $errors->first('time_trigger') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -84,10 +111,13 @@
                                     <div class="form-group">
                                         <label>Horário de chegada <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_checkin" type="text" class="form-control timepicker" value="{{ $attendance->time_checkin }}">
+                                            <input name="time_checkin" type="text" class="form-control timepicker" value="{{ old('time_checkin') ? old('time_checkin') : $attendance->time_checkin }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
+                                            @if ($errors->has('time_checkin'))
+                                                <div class="text-small text-danger">{{ $errors->first('time_checkin') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -95,17 +125,23 @@
                                     <div class="form-group">
                                         <label>Horário de saida <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_exit" type="text" class="form-control timepicker" value="{{ $attendance->time_exit }}">
+                                            <input name="time_exit" type="text" class="form-control timepicker" value="{{ old('time_exit') ? old('time_exit') : $attendance->time_exit }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
+                                            @if ($errors->has('time_exit'))
+                                                <div class="text-small text-danger">{{ $errors->first('time_exit') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Observações <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea name="note" class="form-control" rows="5">{{ $attendance->note }}</textarea>
+                                        <textarea name="note" class="form-control" rows="5">{{ old('note') ? old('note') : $attendance->note }}</textarea>
+                                        @if ($errors->has('note'))
+                                            <div class="text-small text-danger">{{ $errors->first('note') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
