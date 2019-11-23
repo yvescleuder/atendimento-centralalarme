@@ -67,10 +67,21 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Solicitante <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="requester" class="form-control" placeholder="Quem fez a solicitação de atendimento?" value="{{ old('requester') ? old('requester') : $attendance->requester }}">
-                                        @if ($errors->has('requester'))
-                                            <div class="text-small text-danger">{{ $errors->first('requester') }}</div>
-                                        @endif
+                                        <select type="text" name="requester" class="form-control requester">
+                                            @if(old('requester'))
+                                                <option value="{{ old('requester') }}" selected>{{ old('requester') }}</option>
+                                            @endif
+                                            @foreach($requesters as $requester)
+                                                @if($requester->name == old('requester'))
+                                                    <option value="{{ $requester->name }}" selected>{{ $requester->name }}</option>
+                                                @else
+                                                    <option value="{{ $requester->name }}">{{ $requester->name }}</option>
+                                                @endif
+                                            @endforeach
+                                            @if ($errors->has('requester'))
+                                                <div class="text-small text-danger">{{ $errors->first('requester') }}</div>
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
@@ -161,9 +172,16 @@
     <!-- DateTimePicker -->
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/moment/moment.min.js"></script>
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+    <!-- Select2 -->
+    <script src="http://demo.themekita.com/atlantis/livepreview/examples/assets/js/plugin/select2/select2.full.min.js"></script>
     <script>
         $('.timepicker').datetimepicker({
             format: 'HH:mm',
+        });
+        $(".requester").select2({
+            tags: true,
+            theme: "bootstrap",
+            placeholder: "Quem fez a solicitação de atendimento?"
         });
     </script>
 @endsection

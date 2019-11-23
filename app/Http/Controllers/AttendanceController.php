@@ -46,6 +46,8 @@ class AttendanceController extends Controller
      */
     public function store(StoreAttendanceRequest $request)
     {
+        $request['note'] = str_replace(["\r\n", "\n", "\r"], '<br />', $request['note']);
+        $request['note'] = str_replace(["'", '"'], '', $request['note']);
         Attendance::create($request->all() + ['user_id' => 1]);
         return redirect()->route('attendance.index')->withSuccess('Atendimento finalizado!');
     }
@@ -72,7 +74,10 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($attendance->id);
         $companies = Company::all();
         $agents = Agent::all();
-        return view('attendance.edit', ['attendance' => $attendance, 'companies' => $companies, 'agents' => $agents]);
+        $requesters = Attendance::groupBy('requester')
+            ->selectRaw('requester as name')
+            ->get();
+        return view('attendance.edit', ['attendance' => $attendance, 'companies' => $companies, 'agents' => $agents, 'requesters' => $requesters]);
     }
 
     /**

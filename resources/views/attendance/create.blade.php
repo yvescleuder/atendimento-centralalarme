@@ -62,8 +62,15 @@
                                         <label>Solicitante <span class="text-danger font-weight-bold">*</span></label>
                                         <select type="text" name="requester" class="form-control requester">
                                             <option value=""></option>
+                                            @if(old('requester'))
+                                                <option value="{{ old('requester') }}" selected>{{ old('requester') }}</option>
+                                            @endif
                                             @foreach($requesters as $requester)
-                                                <option value="{{ $requester->name }}" {{ (old('requester') == $requester->name) ? 'selected' : '' }}>{{ $requester->name }}</option>
+                                                @if($requester->name == old('requester'))
+                                                    <option value="{{ $requester->name }}" selected>{{ $requester->name }}</option>
+                                                @else
+                                                    <option value="{{ $requester->name }}">{{ $requester->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @if ($errors->has('requester'))
