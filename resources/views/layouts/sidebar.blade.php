@@ -16,19 +16,19 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item @if(Route::is('home')) ?? active : '' @endif">
-                    <a  href="#dashboard" aria-expanded="false">
+                <li class="nav-item {{ (Route::is('home')) ? 'active' : '' }}">
+                    <a  href="{{ route('home') }}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item @if(Route::is('attendance.*')) ?? active : '' @endif">
-                    <a data-toggle="collapse" href="#base">
+                <li class="nav-item {{ (Route::is('attendance.*')) ? 'active' : '' }} ">
+                    <a data-toggle="collapse" href="#atendimento">
                         <i class="fas fa-book-open"></i>
                         <p>Atendimento</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="base">
+                    <div class="collapse" id="atendimento">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('attendance.create') }}">

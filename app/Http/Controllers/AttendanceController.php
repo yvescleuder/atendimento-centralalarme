@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agent;
 use App\Attendance;
 use App\Company;
+use App\Http\Requests\StoreAttendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -39,8 +40,9 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAttendance $request)
     {
+
         Attendance::create($request->all() + ['user_id' => 1]);
         return redirect()->route('attendance.index')->withSuccess('Atendimento finalizado!');
     }
@@ -64,7 +66,10 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        //
+        $attendance = Attendance::findOrFail($attendance->id);
+        $companies = Company::all();
+        $agents = Agent::all();
+        return view('attendance.edit', ['attendance' => $attendance, 'companies' => $companies, 'agents' => $agents]);
     }
 
     /**
@@ -76,7 +81,9 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, Attendance $attendance)
     {
-        //
+        $attendance = Attendance::find($attendance->id);
+        $attendance->update($request->all());
+        return redirect()->route('attendance.index')->withSuccess('Atendimento atualizado!');
     }
 
     /**

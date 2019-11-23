@@ -20,17 +20,18 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Cadastrar</a>
+                    <a href="#">Alterar</a>
                 </li>
             </ul>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <form action="{{ route('attendance.store') }}" method="POST">
+                    <form action="{{ route('attendance.update', $attendance->id) }}" method="POST">
+                        <input name="_method" type="hidden" value="PUT">
                         {{ csrf_field() }}
                         <div class="card-header">
-                            <div class="card-title">Cadastre um novo atendimento</div>
+                            <div class="card-title">Alterar atendimento</div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -38,104 +39,80 @@
                                     <div class="form-group">
                                         <label>Empresa solicitante <span class="text-danger font-weight-bold">*</span></label>
                                         <select name="company_id" class="form-control">
-                                            <option value>-- Selecione</option>
+                                            <option>-- Selecione</option>
                                             @foreach($companies as $company)
-                                                <option value="{{ $company->id }}" {{ (old('company_id') == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
+                                                <option value="{{ $company->id }}" {{ ($attendance->company_id == $company->id) ? 'selected' : ''}}>{{ $company->name }}</option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('company_id'))
-                                            <div class="text-small text-danger">{{ $errors->first('company_id') }}</div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Local (Cliente) <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?">
-                                        @if ($errors->has('client'))
-                                            <div class="text-small text-danger">{{ $errors->first('client') }}</div>
-                                        @endif
+                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?" value="{{ $attendance->client }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Solicitante <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="requester" class="form-control" placeholder="Quem fez a solicitação de atendimento?">
-                                        @if ($errors->has('requester'))
-                                            <div class="text-small text-danger">{{ $errors->first('requester') }}</div>
-                                        @endif
+                                        <input type="text" name="requester" class="form-control" placeholder="Quem fez a solicitação de atendimento?" value="{{ $attendance->requester }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Agente <span class="text-danger font-weight-bold">*</span></label>
                                         <select name="agent_id" class="form-control">
-                                            <option value>-- Selecione</option>
+                                            <option>-- Selecione</option>
                                             @foreach($agents as $agent)
-                                                <option value="{{ $agent->id }}" {{ (old('agent_id') == $agent->id ? 'selected' : '') }}>{{ $agent->name }}</option>
+                                                <option value="{{ $agent->id }}" {{ ($attendance->agent_id == $agent->id) ? 'selected' : ''}}>{{ $agent->name }}</option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('agent_id'))
-                                            <div class="text-small text-danger">{{ $errors->first('agent_id') }}</div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Horário de acionamento <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_trigger" type="text" class="form-control timepicker" value="{{ old('time_trigger') }}">
+                                            <input name="time_trigger" type="text" class="form-control timepicker" value="{{ $attendance->time_trigger }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
                                         </div>
-                                        @if ($errors->has('time_trigger'))
-                                            <div class="text-small text-danger">{{ $errors->first('time_trigger') }}</div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Horário de chegada <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_checkin" type="text" class="form-control timepicker" value="{{ old('time_checkin') }}">
+                                            <input name="time_checkin" type="text" class="form-control timepicker" value="{{ $attendance->time_checkin }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
                                         </div>
-                                        @if ($errors->has('time_checkin'))
-                                            <div class="text-small text-danger">{{ $errors->first('time_checkin') }}</div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Horário de saida <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_exit" type="text" class="form-control timepicker" value="{{ old('time_exit') }}">
+                                            <input name="time_exit" type="text" class="form-control timepicker" value="{{ $attendance->time_exit }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
                                         </div>
-                                        @if ($errors->has('time_exit'))
-                                            <div class="text-small text-danger">{{ $errors->first('time_exit') }}</div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Observações <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea name="note" class="form-control" rows="5">{{ old('note') }}</textarea>
+                                        <textarea name="note" class="form-control" rows="5">{{ $attendance->note }}</textarea>
                                     </div>
-                                    @if ($errors->has('note'))
-                                        <div class="text-small text-danger">{{ $errors->first('note') }}</div>
-                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="card-action">
                             <small class="form-text text-muted text-danger font-weight-bold">* preencher todos os campos que estiverem com este indicativo.</small>
-                            <button type="submit" class="btn btn-success">Cadastrar</button>
+                            <button type="submit" class="btn btn-success">Salvar alterações</button>
                         </div>
                     </form>
                 </div>

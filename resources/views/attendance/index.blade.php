@@ -43,7 +43,7 @@
                                     <th>Horario de acionamento</th>
                                     <th>Horario de check-in</th>
                                     <th>Horario de saida</th>
-                                    <th>Observações</th>
+                                    <th>Obs</th>
                                     <th>Ações</th>
                                 </tr>
                                 </thead>
@@ -57,7 +57,7 @@
                                         <th>Horario de acionamento</th>
                                         <th>Horario de check-in</th>
                                         <th>Horario de saida</th>
-                                        <th>Observações</th>
+                                        <th>Obs</th>
                                         <th>Ações</th>
                                     </tr>
                                 </tfoot>
@@ -72,8 +72,8 @@
                                             <td>{{ $attendance->time_trigger }}</td>
                                             <td>{{ $attendance->time_checkin }}</td>
                                             <td>{{ $attendance->time_exit }}</td>
-                                            <td><button class="btn btn-success" onclick="javascript:note('{{$attendance->note}}')">Visualizar</button></td>
-                                            <td><button class="btn btn-primary btn-sm"><i class="far fa-edit"></i></button> <button class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button></td>
+                                            <td><button class="btn btn-success btn-xs" onclick="javascript:note('{{$attendance->note}}')">Visualizar</button></td>
+                                            <td><a href="{{ route('attendance.edit', $attendance->id) }}"><button class="btn btn-primary btn-xs"><i class="far fa-edit"></i></button></a> <button class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
