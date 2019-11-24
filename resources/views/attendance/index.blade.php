@@ -119,21 +119,22 @@
     <script src="/js/plugin/datatables/datatables.min.js"></script>
     <!-- Sweet Alert -->
     <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
-    <script type="text/javascript" src="/js/modules/attendance/index.js"></script>
+    <script type="text/javascript" src="/js/modules/attendance.js"></script>
+    <script type="text/javascript" src="/js/modules/message.js"></script>
     @if(Session::has('success'))
         <script type="text/javascript">
-            centralalarme.attendance.index.messageSuccess("{{ Session::get('success') }}");
+            centralalarme.message.success("{{ Session::get('success') }}");
         </script>
     @endif
     @if(Session::has('error'))
         <script type="text/javascript">
-            centralalarme.attendance.index.messageError("{{ Session::get('error') }}");
+            centralalarme.message.error("{{ Session::get('error') }}");
         </script>
     @endif
 
     <script type="text/javascript">
         $(document).ready(function() {
-            centralalarme.attendance.index.translateDataTable();
+            centralalarme.attendance.index().translateDataTable();
         });
     </script>
 @endsection

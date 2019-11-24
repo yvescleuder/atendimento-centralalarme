@@ -176,17 +176,18 @@
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
     <!-- Select2 -->
     <script src="http://demo.themekita.com/atlantis/livepreview/examples/assets/js/plugin/select2/select2.full.min.js"></script>
-    <script type="text/javascript" src="/js/modules/attendance/edit.js"></script>
+    <script type="text/javascript" src="/js/modules/attendance.js"></script>
+    <script type="text/javascript" src="/js/modules/message.js"></script>
     @if( Session::has('error'))
         <script type="text/javascript">
-            centralalarme.attendance.edit.messageError("{{ Session::get('error') }}");
+            centralalarme.message.error("{{ Session::get('error') }}");
         </script>
     @endif
 
     <script type="text/javascript">
         $(document).ready(function() {
-            centralalarme.attendance.edit.timepicker();
-            centralalarme.attendance.edit.select2();
+            centralalarme.attendance.timepicker();
+            centralalarme.attendance.select2();
         });
     </script>
 @endsection
