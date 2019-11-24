@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Agent;
 use App\Attendance;
 use App\Company;
+use App\Http\Requests\ReportAttendanceRequest;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -26,7 +28,7 @@ class AttendanceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -41,14 +43,19 @@ class AttendanceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreAttendanceRequest $request
+     * @return mixed
      */
     public function store(StoreAttendanceRequest $request)
     {
-        $request['note'] = str_replace(["\r\n", "\n", "\r"], '<br />', $request['note']);
-        $request['note'] = str_replace(["'", '"'], '', $request['note']);
-        Attendance::create($request->all() + ['user_id' => 1]);
+        try {
+            $request['note'] = str_replace(["\r\n", "\n", "\r"], '<br />', $request['note']);
+            $request['note'] = str_replace(["'", '"'], '', $request['note']);
+            Attendance::create($request->all() + ['user_id' => 1]);
+        } catch (\Exception $exception) {
+            return back()->withInput()->withError('Atendimento não cadastrado! Verifique com o suporte.');
+        }
+
         return redirect()->route('attendance.index')->withSuccess('Atendimento finalizado!');
     }
 
@@ -66,8 +73,8 @@ class AttendanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Attendance  $attendance
-     * @return \Illuminate\Http\Response
+     * @param Attendance $attendance
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Attendance $attendance)
     {
@@ -83,14 +90,19 @@ class AttendanceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Attendance  $attendance
-     * @return \Illuminate\Http\Response
+     * @param UpdateAttendanceRequest $request
+     * @param Attendance $attendance
+     * @return mixed
      */
     public function update(UpdateAttendanceRequest $request, Attendance $attendance)
     {
-        $attendance = Attendance::find($attendance->id);
-        $attendance->update($request->all());
+        try {
+            $attendance = Attendance::findOrFail($attendance->id);
+            $attendance->update($request->all());
+        } catch (\Exception $exception) {
+            return back()->withInput()->withError('Atendimento não atualizado! Verifique com o suporte.');
+        }
+
         return redirect()->route('attendance.index')->withSuccess('Atendimento atualizado!');
     }
 
@@ -102,6 +114,36 @@ class AttendanceController extends Controller
      */
     public function destroy(Attendance $attendance)
     {
-        //
+        try {
+            $attendance = Attendance::findOrFail($attendance->id);
+            $attendance->delete();
+        } catch (\Exception $exception) {
+            return back()->withInput()->withError('Atendimento não deletado! Verifique com o suporte.');
+        }
+
+        return back()->withSuccess('Atendimento deletado!');
+    }
+
+    /**
+     * Display view report
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function report()
+    {
+        $companies = Company::all();
+        return view('report.attendance', ['companies' => $companies]);
+    }
+
+    /**
+     * Download this file from database.
+     *
+     * @param ReportAttendanceRequest $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export(ReportAttendanceRequest $request)
+    {
+        $company = Company::find($request->company_id);
+        return Excel::download(new AttendanceExportController($request->company_id, $request->month, $request->year), "$company->name-$request->month-$request->year.xlsx");
     }
 }

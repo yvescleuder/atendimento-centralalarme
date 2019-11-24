@@ -23,12 +23,12 @@
                     </a>
                 </li>
                 <li class="nav-item {{ (Route::is('attendance.*')) ? 'active' : '' }} ">
-                    <a data-toggle="collapse" href="#atendimento">
+                    <a data-toggle="collapse" href="#attendance">
                         <i class="fas fa-book-open"></i>
                         <p>Atendimento</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="atendimento">
+                    <div class="collapse" id="attendance">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('attendance.create') }}">
@@ -43,11 +43,21 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a href="#sidebarLayouts">
+                <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }} ">
+                    <a data-toggle="collapse" href="#report">
                         <i class="fas fa-file"></i>
                         <p>Relatório</p>
+                        <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="report">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('report.attendance') }}">
+                                    <span class="sub-item">Atendimento</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">

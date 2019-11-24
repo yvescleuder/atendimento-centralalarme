@@ -37,7 +37,7 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Empresa solicitante <span class="text-danger font-weight-bold">*</span></label>
-                                        <select name="company_id" class="form-control">
+                                        <select name="company_id" class="form-control" required>
                                             <option value>-- Selecione</option>
                                             @foreach($companies as $company)
                                                 <option value="{{ $company->id }}" {{ (old('company_id') == $company->id ? 'selected' : '') }}>{{ $company->name }}</option>
@@ -51,7 +51,7 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Local (Cliente) <span class="text-danger font-weight-bold">*</span></label>
-                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?" value="{{ old('client') }}">
+                                        <input type="text" name="client" class="form-control" placeholder="Qual cliente?" value="{{ old('client') }}" required>
                                         @if ($errors->has('client'))
                                             <div class="text-small text-danger">{{ $errors->first('client') }}</div>
                                         @endif
@@ -60,7 +60,7 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Solicitante <span class="text-danger font-weight-bold">*</span></label>
-                                        <select type="text" name="requester" class="form-control requester">
+                                        <select type="text" name="requester" class="form-control requester" required>
                                             <option value=""></option>
                                             @if(old('requester'))
                                                 <option value="{{ old('requester') }}" selected>{{ old('requester') }}</option>
@@ -81,7 +81,7 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Agente <span class="text-danger font-weight-bold">*</span></label>
-                                        <select name="agent_id" class="form-control">
+                                        <select name="agent_id" class="form-control" required>
                                             <option value>-- Selecione</option>
                                             @foreach($agents as $agent)
                                                 <option value="{{ $agent->id }}" {{ (old('agent_id') == $agent->id ? 'selected' : '') }}>{{ $agent->name }}</option>
@@ -96,7 +96,7 @@
                                     <div class="form-group">
                                         <label>Horário de acionamento <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_trigger" type="text" class="form-control timepicker" value="{{ old('time_trigger') }}">
+                                            <input name="time_trigger" type="text" class="form-control timepicker" value="{{ old('time_trigger') }}" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
@@ -110,7 +110,7 @@
                                     <div class="form-group">
                                         <label>Horário de chegada <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_checkin" type="text" class="form-control timepicker" value="{{ old('time_checkin') }}">
+                                            <input name="time_checkin" type="text" class="form-control timepicker" value="{{ old('time_checkin') }}" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
@@ -124,7 +124,7 @@
                                     <div class="form-group">
                                         <label>Horário de saida <span class="text-danger font-weight-bold">*</span></label>
                                         <div class="input-group">
-                                            <input name="time_exit" type="text" class="form-control timepicker" value="{{ old('time_exit') }}">
+                                            <input name="time_exit" type="text" class="form-control timepicker" value="{{ old('time_exit') }}" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-clock"></i></span>
                                             </div>
@@ -137,7 +137,7 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Observações <span class="text-danger font-weight-bold">*</span></label>
-                                        <textarea name="note" class="form-control" rows="5">{{ old('note') }}</textarea>
+                                        <textarea name="note" class="form-control" rows="5" required>{{ old('note') }}</textarea>
                                         @if ($errors->has('note'))
                                             <div class="text-small text-danger">{{ $errors->first('note') }}</div>
                                         @endif
@@ -157,19 +157,24 @@
 @endsection
 
 @section('javascript')
+    <!-- Sweet Alert -->
+    <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
     <!-- DateTimePicker -->
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/moment/moment.min.js"></script>
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
     <!-- Select2 -->
     <script src="http://demo.themekita.com/atlantis/livepreview/examples/assets/js/plugin/select2/select2.full.min.js"></script>
-    <script>
-        $('.timepicker').datetimepicker({
-            format: 'HH:mm',
-        });
-        $(".requester").select2({
-            tags: true,
-            theme: "bootstrap",
-            placeholder: "Quem fez a solicitação de atendimento?"
+    <script type="text/javascript" src="/js/modules/attendance/create.js"></script>
+    @if( Session::has('error'))
+        <script type="text/javascript">
+            centralalarme.attendance.create.messageError("{{ Session::get('error') }}");
+        </script>
+    @endif
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            centralalarme.attendance.create.timepicker();
+            centralalarme.attendance.create.select2();
         });
     </script>
 @endsection

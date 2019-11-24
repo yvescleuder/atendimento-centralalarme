@@ -34,18 +34,18 @@
                         <div class="table-responsive">
                             <table id="basic-datatables" class="display table table-striped table-hover">
                                 <thead>
-                                <tr>
-                                    <th>Monitor</th>
-                                    <th>Empresa</th>
-                                    <th>Cliente</th>
-                                    <th>Solicitante</th>
-                                    <th>Agente</th>
-                                    <th>Horario de acionamento</th>
-                                    <th>Horario de check-in</th>
-                                    <th>Horario de saida</th>
-                                    <th>Obs</th>
-                                    <th>Ações</th>
-                                </tr>
+                                    <tr>
+                                        <th>Monitor</th>
+                                        <th>Empresa</th>
+                                        <th>Cliente</th>
+                                        <th>Solicitante</th>
+                                        <th>Agente</th>
+                                        <th>Horario de acionamento</th>
+                                        <th>Horario de check-in</th>
+                                        <th>Horario de saida</th>
+                                        <th>Obs</th>
+                                        <th>Ações</th>
+                                    </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
@@ -72,8 +72,19 @@
                                             <td>{{ $attendance->time_trigger }}</td>
                                             <td>{{ $attendance->time_checkin }}</td>
                                             <td>{{ $attendance->time_exit }}</td>
-                                            <td><button class="btn btn-success btn-xs" onclick="javascript:note('{{$attendance->note}}')">Visualizar</button></td>
-                                            <td><a href="{{ route('attendance.edit', $attendance->id) }}"><button class="btn btn-primary btn-xs"><i class="far fa-edit"></i></button></a> <button class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button></td>
+                                            <td>
+                                                <button class="btn btn-success btn-xs" onclick="centralalarme.attendance.index.modalNote('{{$attendance->note}}')">Visualizar</button>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('attendance.edit', $attendance->id) }}">
+                                                    <button class="btn btn-primary btn-xs"><i class="far fa-edit"></i></button>
+                                                </a>
+                                                <form action="{{ route('attendance.destroy', $attendance->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -94,7 +105,6 @@
                     </button>
                 </div>
                 <div class="modal-body" id="modal-note-text">
-                    AAAA
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -105,59 +115,25 @@
 @endsection
 
 @section('javascript')
-    <!-- Sweet Alert -->
-    <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
-    @if( Session::has('success'))
-        <script>
-            swal("{{ Session::get('success') }}", {
-                icon : "success",
-                buttons: {
-                    confirm: {
-                        className : 'btn btn-success'
-                    }
-                },
-            });
-        </script>
-    @endif
     <!-- Datatables -->
     <script src="/js/plugin/datatables/datatables.min.js"></script>
-    <script>
-        $('#basic-datatables').DataTable({
-            "language" : {
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_ resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Pesquisar",
-                "oPaginate": {
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLast": "Último"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                },
-                "select": {
-                    "rows": {
-                        "_": "Selecionado %d linhas",
-                        "0": "Nenhuma linha selecionada",
-                        "1": "Selecionado 1 linha"
-                    }
-                }
-            }
-        });
+    <!-- Sweet Alert -->
+    <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/js/modules/attendance/index.js"></script>
+    @if(Session::has('success'))
+        <script type="text/javascript">
+            centralalarme.attendance.index.messageSuccess("{{ Session::get('success') }}");
+        </script>
+    @endif
+    @if(Session::has('error'))
+        <script type="text/javascript">
+            centralalarme.attendance.index.messageError("{{ Session::get('error') }}");
+        </script>
+    @endif
 
-        function note(note) {
-            $('#modal-note-text').html(note);
-            $('#modal-note').modal('toggle');
-        }
+    <script type="text/javascript">
+        $(document).ready(function() {
+            centralalarme.attendance.index.translateDataTable();
+        });
     </script>
 @endsection
