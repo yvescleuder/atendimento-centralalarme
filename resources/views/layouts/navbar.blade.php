@@ -19,6 +19,8 @@
                                             Boa noite,
                                         @elseif(\Carbon\Carbon::now()->format('H') > 12)
                                             Boa tarde,
+                                        @elseif(\Carbon\Carbon::now()->format('H') < 6)
+                                            Boa noite,
                                         @else
                                             Bom dia,
                                         @endif
