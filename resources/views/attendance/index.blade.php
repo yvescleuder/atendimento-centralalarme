@@ -35,6 +35,7 @@
                             <table id="basic-datatables" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th>Data</th>
                                         <th>Monitor</th>
                                         <th>Empresa</th>
                                         <th>Cliente</th>
@@ -49,6 +50,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th>Data</th>
                                         <th>Monitor</th>
                                         <th>Empresa</th>
                                         <th>Cliente</th>
@@ -64,7 +66,8 @@
                                 <tbody>
                                     @foreach($attendances as $attendance)
                                         <tr>
-                                            <td>{{ $attendance->user_id }}</td>
+                                            <td>{{ $attendance->created_at->format('d/m/Y') }}</td>
+                                            <td>{{ $attendance->user->name }}</td>
                                             <td>{{ $attendance->company->name }}</td>
                                             <td>{{ $attendance->client }}</td>
                                             <td>{{ $attendance->requester }}</td>
@@ -72,18 +75,21 @@
                                             <td>{{ $attendance->time_trigger }}</td>
                                             <td>{{ $attendance->time_checkin }}</td>
                                             <td>{{ $attendance->time_exit }}</td>
+                                            <td><button class="btn btn-success btn-xs" onclick="centralalarme.attendance.index.modalNote('{{$attendance->note}}')">Visualizar</button></td>
                                             <td>
-                                                <button class="btn btn-success btn-xs" onclick="centralalarme.attendance.index.modalNote('{{$attendance->note}}')">Visualizar</button>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('attendance.edit', $attendance->id) }}">
-                                                    <button class="btn btn-primary btn-xs"><i class="far fa-edit"></i></button>
-                                                </a>
-                                                <form action="{{ route('attendance.destroy', $attendance->id) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button>
-                                                </form>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-cogs"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="{{ route('attendance.edit', $attendance->id) }}">Editar</a>
+                                                        <form action="{{ route('attendance.destroy', $attendance->id) }}" method="POST">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit" class="dropdown-item" style="cursor: pointer">Deletar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

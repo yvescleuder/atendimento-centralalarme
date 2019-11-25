@@ -7,9 +7,9 @@
                     <img src="/img/profile.jpg" class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
-                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                    <a aria-expanded="true">
                         <span>
-                            Yves Clêuder
+                            {{ Auth::user()->frist_name }}
                             <span class="user-level">Administrator</span>
                         </span>
                     </a>

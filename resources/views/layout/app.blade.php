@@ -4,39 +4,43 @@
     @include('layouts.head')
 </head>
 <body>
-<div class="wrapper">
-    <div class="main-header">
-        <!-- Logo Header -->
-        <div class="logo-header" data-background-color="blue">
-            <a href="{{ route('home') }}" class="logo">
-                <img src="/img/logo.svg" alt="navbar brand" class="navbar-brand">
-            </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="icon-menu"></i>
-					</span>
-            </button>
-            <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
-            <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
-                    <i class="icon-menu"></i>
+@if(Auth::check())
+    <div class="wrapper">
+        <div class="main-header">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="blue">
+                <a href="{{ route('home') }}" class="logo">
+                    <img src="/img/logo.svg" alt="navbar brand" class="navbar-brand">
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon">
+                            <i class="icon-menu"></i>
+                        </span>
                 </button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="icon-menu"></i>
+                    </button>
+                </div>
             </div>
+            <!-- End Logo Header -->
+
+            @include('layouts.navbar')
         </div>
-        <!-- End Logo Header -->
 
-        @include('layouts.navbar')
-    </div>
+        @include('layouts.sidebar')
 
-    @include('layouts.sidebar')
-
-    <div class="main-panel">
-        <div class="container">
-            @yield('content')
+        <div class="main-panel">
+            <div class="container">
+@endif
+                @yield('content')
+@if(Auth::check())
+            </div>
+            @include('layouts.footer')
         </div>
-        @include('layouts.footer')
     </div>
-</div>
+@endif
 <!--   Core JS Files   -->
 <script src="/js/core/jquery.3.2.1.min.js"></script>
 <script src="/js/core/popper.min.js"></script>

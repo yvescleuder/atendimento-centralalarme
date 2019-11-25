@@ -40,10 +40,11 @@ class AttendanceExportController extends Controller implements FromCollection, S
         return \DB::table('attendances')
             ->join('companies', 'attendances.company_id', '=', 'companies.id')
             ->join('agents', 'attendances.agent_id', '=', 'agents.id')
+            ->join('users', 'attendances.user_id', '=', 'users.id')
             ->where('company_id', '=', $this->company_id)
             ->whereMonth('attendances.created_at', $this->month)
             ->whereYear('attendances.created_at', $this->year)
-            ->select(\DB::raw('DATE_FORMAT(attendances.created_at, "%d/%m/%Y") as data'), 'attendances.client', 'attendances.requester', 'attendances.user_id', 'agents.name', 'attendances.time_trigger', 'attendances.time_checkin', 'attendances.time_exit', 'attendances.note')
+            ->select(\DB::raw('DATE_FORMAT(attendances.created_at, "%d/%m/%Y") as data'), 'attendances.client', 'attendances.requester', 'users.name as operadorName', 'agents.name', 'attendances.time_trigger', 'attendances.time_checkin', 'attendances.time_exit', 'attendances.note')
             ->get();
     }
 

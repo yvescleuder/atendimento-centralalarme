@@ -36,4 +36,9 @@ class Attendance extends Model
     {
         return $this->belongsTo(Agent::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

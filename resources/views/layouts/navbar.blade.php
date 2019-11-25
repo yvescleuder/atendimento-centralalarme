@@ -1,4 +1,5 @@
 <!-- Navbar Header -->
+
 <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
     <div class="container-fluid">
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
@@ -13,14 +14,22 @@
                         <li>
                             <div class="user-box">
                                 <div class="u-text">
-                                    <h4>Oi Yves Clêuder, tudo bem?</h4>
-                                    <p class="text-muted">yves.cl@live.com</p>
+                                    <h4>
+                                        @if(\Carbon\Carbon::now()->format('H') > 18)
+                                            Boa noite,
+                                        @elseif(\Carbon\Carbon::now()->format('H') > 12)
+                                            Boa tarde,
+                                        @else
+                                            Bom dia,
+                                        @endif
+                                        {{ Auth::user()->frist_name }}</h4>
+                                    <p class="text-muted">{{ Auth::user()->email }}</p>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Sair</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}">Sair</a>
                         </li>
                     </div>
                 </ul>

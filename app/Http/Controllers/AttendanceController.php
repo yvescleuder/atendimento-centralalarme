@@ -8,8 +8,6 @@ use App\Company;
 use App\Http\Requests\ReportAttendanceRequest;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceController extends Controller
