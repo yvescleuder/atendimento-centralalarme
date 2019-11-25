@@ -47,9 +47,8 @@ class AttendanceController extends Controller
     public function store(StoreAttendanceRequest $request)
     {
         try {
-            $request['note'] = str_replace(["\r\n", "\n", "\r"], '<br />', $request['note']);
             $request['note'] = str_replace(["'", '"'], '', $request['note']);
-            Attendance::create($request->all() + ['user_id' => 1]);
+            Attendance::create($request->all() + ['user_id' => auth()->id()]);
         } catch (\Exception $exception) {
             return back()->withInput()->withError('Atendimento não cadastrado! Verifique com o suporte.');
         }

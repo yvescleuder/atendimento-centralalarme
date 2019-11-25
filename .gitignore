@@ -1,8 +1,10 @@
+!/vendor/laravel/framework/src/Illuminate/Routing/Router.php
 /node_modules
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+!/vendor/laravel/framework/src/Illuminate/Routing/Router.php
 .env
 .env.backup
 .phpunit.result.cache

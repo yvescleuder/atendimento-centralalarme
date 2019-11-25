@@ -65,11 +65,22 @@ centralalarme.attendance = (function() {
         });
     };
 
+    var textareaNotEnter = function() {
+        $("textarea").keydown(function(e) {
+            if (e.keyCode == 13)
+            {
+                // prevent default behavior
+                e.preventDefault();
+            }
+        });
+    };
+
 
     return {
         index,
         timepicker,
-        select2
+        select2,
+        textareaNotEnter
     }
 
 }());

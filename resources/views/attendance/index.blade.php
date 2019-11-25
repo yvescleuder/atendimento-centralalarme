@@ -67,7 +67,7 @@
                                     @foreach($attendances as $attendance)
                                         <tr>
                                             <td>{{ $attendance->created_at->format('d/m/Y') }}</td>
-                                            <td>{{ $attendance->user->name }}</td>
+                                            <td>{{ $attendance->user->frist_name }}</td>
                                             <td>{{ $attendance->company->name }}</td>
                                             <td>{{ $attendance->client }}</td>
                                             <td>{{ $attendance->requester }}</td>

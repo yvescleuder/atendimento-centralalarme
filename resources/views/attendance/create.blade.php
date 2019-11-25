@@ -176,6 +176,7 @@
         $(document).ready(function() {
             centralalarme.attendance.timepicker();
             centralalarme.attendance.select2();
+            centralalarme.attendance.textareaNotEnter();
         });
     </script>
 @endsection

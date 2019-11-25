@@ -10,7 +10,7 @@
                     <a aria-expanded="true">
                         <span>
                             {{ Auth::user()->frist_name }}
-                            <span class="user-level">Administrator</span>
+                            <span class="user-level">{{ Auth::user()->roles[0]->name }}</span>
                         </span>
                     </a>
                 </div>
@@ -43,22 +43,24 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }} ">
-                    <a data-toggle="collapse" href="#report">
-                        <i class="fas fa-file"></i>
-                        <p>Relatório</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="report">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('report.attendance') }}">
-                                    <span class="sub-item">Atendimento</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @role('Administrador')
+                    <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }} ">
+                        <a data-toggle="collapse" href="#report">
+                            <i class="fas fa-file"></i>
+                            <p>Relatório</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="report">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ route('report.attendance') }}">
+                                        <span class="sub-item">Atendimento</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endrole
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">
                         <i class="fas fa-building"></i>
