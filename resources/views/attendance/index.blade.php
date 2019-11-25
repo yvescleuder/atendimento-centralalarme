@@ -75,7 +75,7 @@
                                             <td>{{ $attendance->time_trigger }}</td>
                                             <td>{{ $attendance->time_checkin }}</td>
                                             <td>{{ $attendance->time_exit }}</td>
-                                            <td><button class="btn btn-success btn-xs" onclick="centralalarme.attendance.index.modalNote('{{$attendance->note}}')">Visualizar</button></td>
+                                            <td><button class="btn btn-success btn-xs" onclick="centralalarme.attendance.index().modalNote('{{$attendance->note}}')">Visualizar</button></td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
