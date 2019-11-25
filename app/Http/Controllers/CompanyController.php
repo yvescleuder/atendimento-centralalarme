@@ -24,7 +24,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('company.create');
     }
 
     /**
@@ -35,7 +35,19 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $logo = $request->file('logo');
+        $name = time().'.'.$logo->getClientOriginalExtension();
+        $destinationPath = public_path('/img/company/');
+        $logo->move($destinationPath, $name);
+        list($r, $g, $b) = sscanf($request->color_hex, "#%02x%02x%02x");
+        Company::create([
+            'name' => $request->name,
+            'logo' => $name,
+            'color_hex' => $request->color_hex,
+            'color_rgb' => "$r,$g,$b"
+        ]);
+
+        return redirect()->route('company.create')->withSuccess('Empresa cadastrada');
     }
 
     /**

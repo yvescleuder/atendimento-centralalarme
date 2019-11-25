@@ -44,44 +44,41 @@
                     </div>
                 </li>
                 @role('Administrador')
-                    <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }} ">
-                        <a data-toggle="collapse" href="#report">
-                            <i class="fas fa-file"></i>
-                            <p>Relatório</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="report">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ route('report.attendance') }}">
-                                        <span class="sub-item">Atendimento</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                @endrole
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#sidebarLayouts">
-                        <i class="fas fa-building"></i>
-                        <p>Empresa</p>
+                <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }} ">
+                    <a data-toggle="collapse" href="#report">
+                        <i class="fas fa-file"></i>
+                        <p>Relatório</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="sidebarLayouts">
+                    <div class="collapse" id="report">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="sidebar-style-1.html">
-                                    <span class="sub-item">Cadastrar</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="overlay-sidebar.html">
-                                    <span class="sub-item">Listar</span>
+                                <a href="{{ route('report.attendance') }}">
+                                    <span class="sub-item">Atendimento</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @endrole
+                @role('Administrador')
+                <li class="nav-item {{ (Route::is('company.*')) ? 'active' : '' }} ">
+                    <a data-toggle="collapse" href="#company">
+                        <i class="fas fa-building"></i>
+                        <p>Empresa</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="company">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('company.create') }}">
+                                    <span class="sub-item">Cadastrar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endrole
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">
                         <i class="fas fa-user"></i>

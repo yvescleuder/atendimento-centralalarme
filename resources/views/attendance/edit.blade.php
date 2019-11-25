@@ -73,9 +73,11 @@
                                             @endif
                                             @foreach($requesters as $requester)
                                                 @if($requester->name == old('requester'))
+                                                    <option value="{{ old('requester') }}" selected>{{ old('requester') }}</option>
+                                                @elseif($requester->name == $attendance->requester)
                                                     <option value="{{ $requester->name }}" selected>{{ $requester->name }}</option>
                                                 @else
-                                                    <option value="{{ $requester->name }}">{{ $requester->name }}</option>
+                                                        <option value="{{ $requester->name }}">{{ $requester->name }}</option>
                                                 @endif
                                             @endforeach
                                             @if ($errors->has('requester'))
