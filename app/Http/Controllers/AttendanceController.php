@@ -19,7 +19,9 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::orderBy('id', 'DESC')->get();
+        $attendances = Attendance::orderBy('id', 'DESC')->whereHas('company', function ($query) {
+            $query->whereNull('deleted_at');
+        })->get();
         return view('attendance.index', ['attendances' => $attendances]);
     }
 
