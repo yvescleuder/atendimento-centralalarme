@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -43,5 +44,15 @@ class LoginController extends Controller
         $this->guard()->logout();
         $request->session()->invalidate();
         return redirect()->route('login');
+    }
+
+    /**
+     * Message welcome after login.
+     *
+     * @return string
+     */
+    public function authenticated(Request $request, User $user) {
+        session()->flash('welcome', "Oi {$user->first_name} {$user->last_name}, seja bem vindo! Tenha um bom trabalho <i class='far fa-smile-beam'></i>" );
+        return redirect()->intended($this->redirectPath());
     }
 }

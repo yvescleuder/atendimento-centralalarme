@@ -82,8 +82,6 @@
 @section('javascript')
     <!-- Datatables -->
     <script src="/js/plugin/datatables/datatables.min.js"></script>
-    <!-- Sweet Alert -->
-    <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript" src="/js/modules/datatable.js"></script>
     <script type="text/javascript" src="/js/modules/message.js"></script>
     @if(Session::has('success'))

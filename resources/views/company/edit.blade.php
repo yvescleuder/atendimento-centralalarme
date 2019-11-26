@@ -84,8 +84,6 @@
 @section('javascript')
     <link rel='stylesheet' href='/css/jquery.minicolors.css' type='text/css' media='all' />
     <script type="text/javascript" src="/js/plugin/color-picker/jquery.minicolors.min.js"></script>
-    <!-- Sweet Alert -->
-    <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript" src="/js/modules/company.js"></script>
     <script type="text/javascript" src="/js/modules/message.js"></script>
     @if( Session::has('error'))

@@ -157,8 +157,6 @@
 @endsection
 
 @section('javascript')
-    <!-- Sweet Alert -->
-    <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
     <!-- DateTimePicker -->
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/moment/moment.min.js"></script>
     <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>

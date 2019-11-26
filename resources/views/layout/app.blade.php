@@ -52,6 +52,25 @@
 <script src="/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <!-- Atlantis JS -->
 <script src="/js/atlantis.min.js"></script>
+<!-- Sweet Alert -->
+<script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
+@if(Session::has('welcome'))
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var span = document.createElement("span");
+            span.innerHTML = "{!! Session::get('welcome') !!}";
+
+            swal({
+                content: span,
+                buttons: {
+                    confirm: {
+                        className : 'btn btn-success'
+                    }
+                },
+            });
+        });
+    </script>
+@endif
 @yield('javascript')
 </body>
 </html>
