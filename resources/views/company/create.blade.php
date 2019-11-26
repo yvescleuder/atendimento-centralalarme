@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-3 col-lg-3">
                                     <div class="form-group input-file input-file-image">
-                                        <img class="img-upload-preview" width="150" src="http://placehold.it/150x150" alt="preview">
+                                        <img class="img-upload-preview" width="120" src="http://placehold.it/120x80" alt="preview">
                                         <input type="file" class="form-control form-control-file" id="uploadImg2" name="logo" accept="image/*" required>
                                         <label for="uploadImg2" class="label-input-file btn btn-black btn-round">
                                             <span class="btn-label">
@@ -62,6 +62,9 @@
                                             </span>
                                             Selecionar logo
                                         </label>
+                                        @if ($errors->has('logo'))
+                                            <div class="text-small text-danger">{{ $errors->first('logo') }}</div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

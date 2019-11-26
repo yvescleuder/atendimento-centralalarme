@@ -4,6 +4,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/public/img/company/*
 !/vendor/laravel/framework/src/Illuminate/Routing/Router.php
 .env
 .env.backup

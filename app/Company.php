@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'logo',
@@ -19,6 +21,4 @@ class Company extends Model
         'updated_at',
         'deleted_at'
     ];
-
-    use SoftDeletes;
 }

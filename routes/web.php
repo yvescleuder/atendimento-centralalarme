@@ -26,6 +26,9 @@ Route::group(['middleware' => ['auth', 'role:Administrador']], function() {
     Route::get('/report/attendance', 'AttendanceController@report')->name('report.attendance');
     Route::post('/report/attendance/export', 'AttendanceController@export')->name('report.attendance.export');
 
+
+    Route::get('/company', 'CompanyController@index')->name('company.index');
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
-    Route::post('/companny', 'CompanyController@store')->name('company.store');
+    Route::post('/company', 'CompanyController@store')->name('company.store');
+    Route::delete('/company/{company}', 'CompanyController@destroy')->name('company.destroy');
 });

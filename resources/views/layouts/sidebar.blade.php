@@ -75,6 +75,11 @@
                                     <span class="sub-item">Cadastrar</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('company.index') }}">
+                                    <span class="sub-item">Listar</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

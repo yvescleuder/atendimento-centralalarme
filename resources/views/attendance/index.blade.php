@@ -126,6 +126,7 @@
     <!-- Sweet Alert -->
     <script src="/js/plugin/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript" src="/js/modules/attendance.js"></script>
+    <script type="text/javascript" src="/js/modules/datatable.js"></script>
     <script type="text/javascript" src="/js/modules/message.js"></script>
     @if(Session::has('success'))
         <script type="text/javascript">
@@ -140,7 +141,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            centralalarme.attendance.index().translateDataTable();
+            centralalarme.datatable.init(1, 'desc');
         });
     </script>
 @endsection
