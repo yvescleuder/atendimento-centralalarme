@@ -4,12 +4,12 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="/img/profile.jpg" class="avatar-img rounded-circle">
+                    <img src="//via.placeholder.com/50/FFFFFF/000000/?text={{ substr(Auth::user()->first_name, 0, 1) }} {{ substr(Auth::user()->last_name, 0, 1) }}" class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
                     <a aria-expanded="true">
                         <span>
-                            {{ Auth::user()->frist_name }}
+                            {{ Auth::user()->first_name }}
                             <span class="user-level">{{ Auth::user()->roles[0]->name }}</span>
                         </span>
                     </a>

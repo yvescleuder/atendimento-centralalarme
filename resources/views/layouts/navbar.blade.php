@@ -24,7 +24,7 @@
                                         @else
                                             Bom dia,
                                         @endif
-                                        {{ Auth::user()->frist_name }}</h4>
+                                        {{ Auth::user()->first_name }}</h4>
                                     <p class="text-muted">{{ Auth::user()->email }}</p>
                                 </div>
                             </div>

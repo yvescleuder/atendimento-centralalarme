@@ -4,12 +4,12 @@
     <body class="login">
     <div class="wrapper wrapper-login wrapper-login-full p-0">
         <div class="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center bg-secondary-gradient">
-            <h1 class="title fw-bold text-white mb-3">SISTEMA DE GERENCIAMENTO DE ATENDIMENTOS E VENDAS (SGAV)</h1>
+            <h1 class="title fw-bold text-white mb-3">SGAV - SISTEMA DE GERENCIAMENTO DE ATENDIMENTOS E VENDAS</h1>
             <p class="subtitle text-white op-7">Sistema desenvolvido por Yves Clêuder</p>
         </div>
         <div class="login-aside w-50 d-flex align-items-center justify-content-center bg-white">
             <div class="container container-login container-transparent animated fadeIn">
-                <h3 class="text-center">Entrar</h3>
+                <h3 class="text-center">CENTRAL ALARME</h3>
                 <div class="login-form">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

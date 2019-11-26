@@ -44,7 +44,7 @@ class AttendanceExportController extends Controller implements FromCollection, S
             ->where('company_id', '=', $this->company_id)
             ->whereMonth('attendances.created_at', $this->month)
             ->whereYear('attendances.created_at', $this->year)
-            ->select(\DB::raw('DATE_FORMAT(attendances.created_at, "%d/%m/%Y") as data'), 'attendances.client', 'attendances.requester', 'users.frist_name', 'agents.name', 'attendances.time_trigger', 'attendances.time_checkin', 'attendances.time_exit', 'attendances.note')
+            ->select(\DB::raw('DATE_FORMAT(attendances.created_at, "%d/%m/%Y") as data'), 'attendances.client', 'attendances.requester', 'users.first_name', 'agents.name', 'attendances.time_trigger', 'attendances.time_checkin', 'attendances.time_exit', 'attendances.note')
             ->get();
     }
 
@@ -150,7 +150,7 @@ class AttendanceExportController extends Controller implements FromCollection, S
     {
         $drawing = new Drawing();
         $drawing->setPath(public_path($this->getLogo()));
-        $drawing->setHeight(200);
+        $drawing->setHeight(80);
         $drawing->setWidth(120);
         $drawing->setCoordinates('A1');
 
