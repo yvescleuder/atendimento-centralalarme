@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Cadastrar atendimento</h4>
+            <h4 class="page-title">Alterar atendimento</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="#">

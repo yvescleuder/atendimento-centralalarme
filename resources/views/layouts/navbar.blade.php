@@ -6,7 +6,7 @@
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
-                        <img src="/img/profile.jpg" class="avatar-img rounded-circle">
+                        <img src="//via.placeholder.com/50/FFFFFF/000000/?text={{ substr(Auth::user()->first_name, 0, 1) }} {{ substr(Auth::user()->last_name, 0, 1) }}" class="avatar-img rounded-circle">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">

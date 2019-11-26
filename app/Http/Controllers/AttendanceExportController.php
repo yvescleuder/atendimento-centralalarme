@@ -149,7 +149,7 @@ class AttendanceExportController extends Controller implements FromCollection, S
     public function drawings()
     {
         $drawing = new Drawing();
-        $drawing->setPath(public_path($this->getLogo()));
+        $drawing->setPath(public_path('/img/company/'.$this->getLogo()));
         $drawing->setHeight(80);
         $drawing->setWidth(120);
         $drawing->setCoordinates('A1');

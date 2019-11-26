@@ -83,11 +83,13 @@
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <a class="dropdown-item" href="{{ route('attendance.edit', $attendance->id) }}">Editar</a>
-                                                        <form action="{{ route('attendance.destroy', $attendance->id) }}" method="POST">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="submit" class="dropdown-item" style="cursor: pointer">Deletar</button>
-                                                        </form>
+                                                        @if(Auth::user()->hasRole('Administrador'))
+                                                            <form action="{{ route('attendance.destroy', $attendance->id) }}" method="POST">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item" style="cursor: pointer">Deletar</button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </td>

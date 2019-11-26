@@ -58,7 +58,7 @@
                                                     <i class="fas fa-cogs"></i>
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="{{ route('attendance.edit', $company->id) }}">Editar</a>
+                                                    <a class="dropdown-item" href="{{ route('company.edit', $company->id) }}">Editar</a>
                                                     <form action="{{ route('company.destroy', $company->id) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf

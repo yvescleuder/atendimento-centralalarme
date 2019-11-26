@@ -75,7 +75,6 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        $attendance = Attendance::findOrFail($attendance->id);
         $companies = Company::all();
         $agents = Agent::all();
         $requesters = Attendance::groupBy('requester')
@@ -112,7 +111,6 @@ class AttendanceController extends Controller
     public function destroy(Attendance $attendance)
     {
         try {
-            $attendance = Attendance::findOrFail($attendance->id);
             $attendance->delete();
         } catch (\Exception $exception) {
             return back()->withInput()->withError('Atendimento não deletado! Verifique com o suporte.');
