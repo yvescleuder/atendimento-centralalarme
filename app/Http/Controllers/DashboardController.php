@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Attendance;
+use App\Company;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +15,32 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $companies = Company::all();
+        $attendances = [];
+        foreach($companies as $company) {
+
+            $attendances[$company->id] = $company;
+            $month = "";
+
+            for($i = 1; $i <= date('m'); $i++) {
+                $monthObg = Attendance::groupBy('company_id')
+                    ->selectRaw('count(*) as attendancesMonth')
+                    ->join('companies', 'attendances.company_id', 'companies.id')
+                    ->where('companies.id', '=', $company->id)
+                    ->whereMonth('attendances.created_at', $i)
+                    ->whereYear('attendances.created_at', date("Y"))
+                    ->get();
+
+                if($monthObg->isEmpty())
+                    $month = $month."0, ";
+                else
+                    $month = $month.$monthObg[0]->attendancesMonth.", ";
+            }
+
+            $attendances[$company->id]['month'] = $month;
+        };
+
+        return view('index', ['attendances' => $attendances]);
     }
 
     /**

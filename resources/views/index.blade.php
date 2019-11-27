@@ -114,37 +114,21 @@
             type: 'line',
             data: {
                 labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-                datasets: [ {
-                    label: "Prosegur",
-                    borderColor: '#f3545d',
-                    pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
-                    pointRadius: 2,
-                    backgroundColor: 'rgba(243, 84, 93, 0.4)',
-                    legendColor: '#f3545d',
-                    fill: true,
-                    borderWidth: 2,
-                    data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
-                }, {
-                    label: "São Luiz",
-                    borderColor: '#fdaf4b',
-                    pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
-                    pointRadius: 2,
-                    backgroundColor: 'rgba(253, 175, 75, 0.4)',
-                    legendColor: '#fdaf4b',
-                    fill: true,
-                    borderWidth: 2,
-                    data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
-                }, {
-                    label: "Dom Elizeu",
-                    borderColor: '#177dff',
-                    pointBackgroundColor: 'rgba(23, 125, 255, 0.6)',
-                    pointRadius: 2,
-                    backgroundColor: 'rgba(23, 125, 255, 0.4)',
-                    legendColor: '#177dff',
-                    fill: true,
-                    borderWidth: 2,
-                    data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
-                }]
+                datasets: [
+                    @foreach($attendances as $attendance)
+                        {
+                            label: "{{ $attendance->name }}",
+                            borderColor: '{{ $attendance->color_hex }}',
+                            pointBackgroundColor: "rgba({{ $attendance->color_rgb }}, 0.6)",
+                            pointRadius: 2,
+                            backgroundColor: "rgba({{ $attendance->color_rgb }}, 0.4)",
+                            legendColor: '{{ $attendance->color_hex }}',
+                            fill: false,
+                            borderWidth: 2,
+                            data: [{{ $attendance->month }}]
+                        },
+                    @endforeach
+                ]
             },
             options : {
                 responsive: true,
