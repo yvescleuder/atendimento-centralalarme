@@ -81,22 +81,7 @@
             centralalarme.dasboard.statisticsChart({!! json_encode($attendances) !!});
             centralalarme.dasboard.chart('attendances-today', "{{ $today->cont }}", ['#f1f1f1', '#FF9E27']);
             centralalarme.dasboard.chart('attendances-all', "{{ $all->cont }}", ['#f1f1f1', '#F25961']);
-
-
-            Circles.create({
-                id:'circles-2',
-                radius:45,
-                value:70,
-                maxValue:100,
-                width:7,
-                text: 36,
-                colors:['#f1f1f1', '#2BB930'],
-                duration:400,
-                wrpClass:'circles-wrp',
-                textClass:'circles-text',
-                styleWrapper:true,
-                styleText:true
-            });
+            centralalarme.dasboard.chart('circles-2', "1", ['#f1f1f1', '#2BB930']);
         });
     </script>
 @endsection

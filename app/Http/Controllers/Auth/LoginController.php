@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Welcome;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -54,5 +55,16 @@ class LoginController extends Controller
     public function authenticated(Request $request, User $user) {
         session()->flash('welcome', "Oi {$user->first_name} {$user->last_name}, seja bem vindo! Tenha um bom trabalho <i class='far fa-smile-beam'></i>" );
         return redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        $welcome = Welcome::all()->random();
+        return view('auth.login', ['welcome' => $welcome]);
     }
 }
