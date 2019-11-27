@@ -19,7 +19,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::orderBy('id', 'DESC')->whereHas('company')->get();
+        $attendances = Attendance::orderBy('id', 'DESC')->get();
         return view('attendance.index', ['attendances' => $attendances]);
     }
 

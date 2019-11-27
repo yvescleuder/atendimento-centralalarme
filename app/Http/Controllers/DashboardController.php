@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Attendance;
 use App\Company;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -17,10 +18,10 @@ class DashboardController extends Controller
     {
         $companies = Company::all();
         $attendances = [];
-        foreach($companies as $company) {
+        foreach($companies as $key => $company) {
 
-            $attendances[$company->id] = $company;
-            $month = "";
+            $attendances[$key] = $company;
+            $month = [];
 
             for($i = 1; $i <= date('m'); $i++) {
                 $monthObg = Attendance::groupBy('company_id')
@@ -32,15 +33,24 @@ class DashboardController extends Controller
                     ->get();
 
                 if($monthObg->isEmpty())
-                    $month = $month."0, ";
+                    $month[] = 0;
                 else
-                    $month = $month.$monthObg[0]->attendancesMonth.", ";
+                    $month[] = $monthObg[0]->attendancesMonth;
+
+                $attendances[$key]['months'] = $month;
             }
 
-            $attendances[$company->id]['month'] = $month;
         };
 
-        return view('index', ['attendances' => $attendances]);
+        $today = Attendance::whereDate('created_at', '=', Carbon::today()->toDateString())
+            ->selectRaw('count(*) as cont')
+            ->first();
+
+        $all = Attendance::selectRaw('count(*) as cont')
+            ->withTrashed()
+            ->first();
+
+        return view('index', ['attendances' => $attendances, 'today' => $today, 'all' => $all]);
     }
 
     /**

@@ -21,4 +21,9 @@ class Company extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

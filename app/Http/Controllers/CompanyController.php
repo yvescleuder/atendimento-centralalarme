@@ -132,6 +132,7 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         try {
+            $company->attendances()->delete();
             $company->delete();
         } catch (\Exception $exception) {
             return back()->withInput()->withError('Empresa não deletada! Verifique com o suporte.');

@@ -6,30 +6,44 @@
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
                     <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-                    <h5 class="text-white op-7 mb-2">Sistema para automatizar planilhas de atendimentos e vendas</h5>
+                    <h5 class="text-white op-7 mb-2">Sistema para controle planilhas de atendimentos e vendas</h5>
                 </div>
             </div>
         </div>
     </div>
     <div class="page-inner mt--5">
         <div class="row mt--2">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card full-height">
                     <div class="card-body">
-                        <div class="card-title">Estatísticas Gerais</div>
-                        <div class="card-category">Informações gerais sobre estatísticas no sistema</div>
+                        <div class="card-title">Estatísticas de Atendimento</div>
+                        <div class="card-category">Informações gerais de atendimento do sistema</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="px-2 pb-2 pb-md-0 text-center">
-                                <div id="circles-1"></div>
+                                <div id="attendances-today"></div>
                                 <h6 class="fw-bold mt-3 mb-0">Novos atendimentos de hoje</h6>
                             </div>
                             <div class="px-2 pb-2 pb-md-0 text-center">
+                                <div id="attendances-all"></div>
+                                <h6 class="fw-bold mt-3 mb-0">Total de atendimentos</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title">Estatísticas de Vendas</div>
+                        <div class="card-category">Informações gerais de vendas do sistema</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="px-2 pb-2 pb-md-0 text-center">
                                 <div id="circles-2"></div>
-                                <h6 class="fw-bold mt-3 mb-0">Exclusão de atendimentos de hoje</h6>
+                                <h6 class="fw-bold mt-3 mb-0">Novas vendas de hoje</h6>
                             </div>
                             <div class="px-2 pb-2 pb-md-0 text-center">
-                                <div id="circles-3"></div>
-                                <h6 class="fw-bold mt-3 mb-0">Total de atendimentos</h6>
+                                <div id="circles-2"></div>
+                                <h6 class="fw-bold mt-3 mb-0">Total de vendas</h6>
                             </div>
                         </div>
                     </div>
@@ -61,135 +75,28 @@
     <script src="/js/plugin/chart.js/chart.min.js"></script>
     <!-- Chart Circle -->
     <script src="/js/plugin/chart-circle/circles.min.js"></script>
-    <script>
-        Circles.create({
-            id:'circles-1',
-            radius:45,
-            value:60,
-            maxValue:100,
-            width:7,
-            text: 5,
-            colors:['#f1f1f1', '#FF9E27'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
+    <script src="/js/modules/dashboard.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            centralalarme.dasboard.statisticsChart({!! json_encode($attendances) !!});
+            centralalarme.dasboard.chart('attendances-today', "{{ $today->cont }}", ['#f1f1f1', '#FF9E27']);
+            centralalarme.dasboard.chart('attendances-all', "{{ $all->cont }}", ['#f1f1f1', '#F25961']);
 
-        Circles.create({
-            id:'circles-2',
-            radius:45,
-            value:70,
-            maxValue:100,
-            width:7,
-            text: 36,
-            colors:['#f1f1f1', '#2BB930'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
 
-        Circles.create({
-            id:'circles-3',
-            radius:45,
-            value:40,
-            maxValue:100,
-            width:7,
-            text: 12,
-            colors:['#f1f1f1', '#F25961'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
-
-        //Chart
-        var ctx = document.getElementById('statisticsChart').getContext('2d');
-
-        var statisticsChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-                datasets: [
-                    @foreach($attendances as $attendance)
-                        {
-                            label: "{{ $attendance->name }}",
-                            borderColor: '{{ $attendance->color_hex }}',
-                            pointBackgroundColor: "rgba({{ $attendance->color_rgb }}, 0.6)",
-                            pointRadius: 2,
-                            backgroundColor: "rgba({{ $attendance->color_rgb }}, 0.4)",
-                            legendColor: '{{ $attendance->color_hex }}',
-                            fill: false,
-                            borderWidth: 2,
-                            data: [{{ $attendance->month }}]
-                        },
-                    @endforeach
-                ]
-            },
-            options : {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    display: true
-                },
-                tooltips: {
-                    bodySpacing: 4,
-                    mode:"nearest",
-                    intersect: 0,
-                    position:"nearest",
-                    xPadding:10,
-                    yPadding:10,
-                    caretPadding:10
-                },
-                layout:{
-                    padding:{left:5,right:5,top:15,bottom:15}
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            fontStyle: "500",
-                            beginAtZero: false,
-                            maxTicksLimit: 5,
-                            padding: 10
-                        },
-                        gridLines: {
-                            drawTicks: false,
-                            display: false
-                        }
-                    }],
-                    xAxes: [{
-                        gridLines: {
-                            zeroLineColor: "transparent"
-                        },
-                        ticks: {
-                            padding: 10,
-                            fontStyle: "500"
-                        }
-                    }]
-                },
-                legendCallback: function(chart) {
-                    var text = [];
-                    text.push('<ul class="' + chart.id + '-legend html-legend">');
-                    for (var i = 0; i < chart.data.datasets.length; i++) {
-                        text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
-                        if (chart.data.datasets[i].label) {
-                            text.push(chart.data.datasets[i].label);
-                        }
-                        text.push('</li>');
-                    }
-                    text.push('</ul>');
-                    return text.join('');
-                }
-            }
+            Circles.create({
+                id:'circles-2',
+                radius:45,
+                value:70,
+                maxValue:100,
+                width:7,
+                text: 36,
+                colors:['#f1f1f1', '#2BB930'],
+                duration:400,
+                wrpClass:'circles-wrp',
+                textClass:'circles-text',
+                styleWrapper:true,
+                styleText:true
+            });
         });
-
-        var myLegendContainer = document.getElementById("myChartLegend");
-
-        // generate HTML legend
-        myLegendContainer.innerHTML = statisticsChart.generateLegend();
     </script>
 @endsection
