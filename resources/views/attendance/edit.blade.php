@@ -40,8 +40,6 @@
                                         <label>Empresa solicitante <span class="text-danger font-weight-bold">*</span></label>
                                         <select name="company_id" class="form-control" required>
                                             <option>-- Selecione</option>
-                                            {{-- Preenche a empresa mesmo se ele tiver "deletado", pois está editando --}}
-                                            <option value="{{ $attendance->company->id }}" selected>{{ $attendance->company->name }}</option>
                                             @foreach($companies as $company)
                                                 @if(old('company_id') == $company->id)
                                                     <option value="{{ $company->id }}" selected>{{ $company->name }}</option>
