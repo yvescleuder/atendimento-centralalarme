@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +23,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -36,17 +37,21 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $user = User::create([
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password'])
-        ]);
+        try {
+            $user = User::create([
+                'first_name' => $request['first_name'],
+                'last_name' => $request['last_name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password'])
+            ]);
 
-        // Adicionando a role no usuário
-        $user->assignRole($request['role_id']);
+            // Adicionando a role no usuário
+            $user->assignRole($request['role_id']);
+        } catch (\Exception $exception) {
+            return back()->withInput()->withError('Usuário não cadastrado! Verifique com o suporte.');
+        }
 
         return redirect()->route('user.index')->withSuccess('Usuário cadastrado!');
     }

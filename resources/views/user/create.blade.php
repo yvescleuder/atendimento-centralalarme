@@ -3,7 +3,7 @@
 @section('content')
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Cadastrar empresa</h4>
+            <h4 class="page-title">Cadastrar usuário</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="#">
@@ -14,7 +14,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Empresa</a>
+                    <a href="#">Usuário</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -30,7 +30,7 @@
                     <form action="{{ route('user.store') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="card-header">
-                            <div class="card-title">Cadastro de Usuário</div>
+                            <div class="card-title">Cadastre um novo usuário</div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -73,19 +73,22 @@
                             </div>
                         </div>
                         <div class="card-header">
-                            <div class="card-title">Grupo de permissões</div>
+                            <div class="card-title">Grupo de permissões <span class="text-danger font-weight-bold">*</span></div>
                         </div>
                         <div class="card-body">
                             @foreach($roles as $role)
                                 <div class="row">
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="role{{ $role->id }}" name="role_id" class="custom-control-input" value="{{ $role->id }}" required>
+                                            <input type="radio" id="role{{ $role->id }}" name="role_id" class="custom-control-input" value="{{ $role->id }}" {{ (old('role_id') == $role->id) ? 'checked' : ''}} required>
                                             <label class="custom-control-label" for="role{{ $role->id }}">{{ $role->name }}</label>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
+                            @if ($errors->has('role_id'))
+                                <div class="text-small text-danger">{{ $errors->first('role_id') }}</div>
+                            @endif
                         </div>
                         <div class="card-action">
                             <small class="form-text text-muted text-danger font-weight-bold">* preencher todos os campos que estiverem com este indicativo.</small>
@@ -105,9 +108,4 @@
             centralalarme.message.error("{{ Session::get('error') }}");
         </script>
     @endif
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-        });
-    </script>
 @endsection
