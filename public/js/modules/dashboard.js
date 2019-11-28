@@ -8,7 +8,7 @@ centralalarme.dasboard = (function() {
             radius: 45,
             value: value,
             maxValue: value,
-            width: 7,
+            width: 5,
             text: value,
             colors: colors,
             duration: 400,

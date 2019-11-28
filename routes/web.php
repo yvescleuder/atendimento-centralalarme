@@ -30,9 +30,9 @@ Route::group(['middleware' => ['auth', 'role:Administrador']], function() {
     Route::get('/company', 'CompanyController@index')->name('company.index');
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
     Route::post('/company', 'CompanyController@store')->name('company.store');
-
     Route::get('/company/{company}/edit', 'CompanyController@edit')->name('company.edit');
     Route::put('/company/{company}', 'CompanyController@update')->name('company.update');
-
     Route::delete('/company/{company}', 'CompanyController@destroy')->name('company.destroy');
+
+    Route::get('/audit', 'AuditController@index')->name('audit.index');
 });

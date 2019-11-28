@@ -83,7 +83,6 @@
                         </ul>
                     </div>
                 </li>
-                @endrole
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">
                         <i class="fas fa-user"></i>
@@ -106,11 +105,12 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="#sidebarLayouts">
+                    <a href="{{ route('audit.index') }}">
                         <i class="fas fa-history"></i>
-                        <p>Log</p>
+                        <p>Auditoria</p>
                     </a>
                 </li>
+                @endrole
             </ul>
         </div>
     </div>

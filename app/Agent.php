@@ -4,9 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Agent extends Model
+class Agent extends Model implements Auditable
 {
+    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $fillable = [
         'name'
     ];
@@ -16,6 +20,4 @@ class Agent extends Model
         'updated_at',
         'deleted_at'
     ];
-
-    use SoftDeletes;
 }
