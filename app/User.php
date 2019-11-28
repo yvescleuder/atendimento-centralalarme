@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -13,6 +14,7 @@ class User extends Authenticatable implements Auditable
     use Notifiable;
     use HasRoles;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

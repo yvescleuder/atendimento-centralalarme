@@ -19,7 +19,15 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::orderBy('id', 'DESC')->get();
+        // Mesmo se o agente, usuário e empresa estiverem "deletada" poderá ver o atendimento, pois é um histórico.
+        $attendances = Attendance::with([
+            'agent' => function($query) {
+                $query->withTrashed();
+            }
+        ])
+        ->orderByDesc('id')
+        ->get();
+
         return view('attendance.index', ['attendances' => $attendances]);
     }
 
@@ -75,6 +83,9 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
+        $attendance = $attendance->with(['agent' => function($query) {
+                                            $query->withTrashed();
+                                        }])->first();
         $companies = Company::all();
         $agents = Agent::all();
         $requesters = Attendance::groupBy('requester')
