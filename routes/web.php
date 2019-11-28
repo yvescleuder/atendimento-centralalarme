@@ -35,4 +35,8 @@ Route::group(['middleware' => ['auth', 'role:Administrador']], function() {
     Route::delete('/company/{company}', 'CompanyController@destroy')->name('company.destroy');
 
     Route::get('/audit', 'AuditController@index')->name('audit.index');
+
+    Route::get('/user', 'UserController@index')->name('user.index');
+    Route::get('/user/create', 'UserController@create')->name('user.create');
+    Route::post('/user', 'UserController@store')->name('user.store');
 });

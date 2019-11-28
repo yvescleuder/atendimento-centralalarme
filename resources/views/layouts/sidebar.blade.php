@@ -83,16 +83,16 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a data-toggle="collapse" href="#sidebarLayouts">
+                <li class="nav-item {{ (Route::is('user.*')) ? 'active' : '' }} ">
+                    <a data-toggle="collapse" href="#user">
                         <i class="fas fa-user"></i>
                         <p>Usuario</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="sidebarLayouts">
+                    <div class="collapse" id="user">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="sidebar-style-1.html">
+                                <a href="{{ route('user.create') }}">
                                     <span class="sub-item">Cadastrar</span>
                                 </a>
                             </li>
