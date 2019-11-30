@@ -31,24 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card full-height">
-                    <div class="card-body">
-                        <div class="card-title">Estatísticas de Vendas</div>
-                        <div class="card-category">Informações gerais de vendas do sistema</div>
-                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                            <div class="px-2 pb-2 pb-md-0 text-center">
-                                <div id="circles-2"></div>
-                                <h6 class="fw-bold mt-3 mb-0">Novas vendas de hoje</h6>
-                            </div>
-                            <div class="px-2 pb-2 pb-md-0 text-center">
-                                <div id="circles-2"></div>
-                                <h6 class="fw-bold mt-3 mb-0">Total de vendas</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{-- Acrescentar informação aqui --}}
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -81,7 +64,7 @@
             centralalarme.dasboard.statisticsChart({!! json_encode($attendances) !!});
             centralalarme.dasboard.chart('attendances-today', "{{ $today->cont }}", ['#f1f1f1', '#FF9E27']);
             centralalarme.dasboard.chart('attendances-all', "{{ $all->cont }}", ['#f1f1f1', '#F25961']);
-            centralalarme.dasboard.chart('circles-2', "1", ['#f1f1f1', '#2BB930']);
+            //centralalarme.dasboard.chart('circles-2', "1", ['#f1f1f1', '#2BB930']);
         });
     </script>
 @endsection
