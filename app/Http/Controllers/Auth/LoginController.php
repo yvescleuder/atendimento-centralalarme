@@ -7,6 +7,7 @@ use App\User;
 use App\Welcome;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -45,6 +46,17 @@ class LoginController extends Controller
         $this->guard()->logout();
         $request->session()->invalidate();
         return redirect()->route('login');
+    }
+
+    /**
+     * New credentials auth, active is true
+     *
+     * @param Request $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return ['email' => $request->email, 'password' => $request->password, 'active' => true];
     }
 
     /**
