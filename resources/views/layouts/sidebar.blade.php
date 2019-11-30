@@ -22,7 +22,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ (Route::is('attendance.*')) ? 'active' : '' }} ">
+                <li class="nav-item {{ (Route::is('attendance.*')) ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#attendance">
                         <i class="fas fa-book-open"></i>
                         <p>Atendimento</p>
@@ -44,7 +44,7 @@
                     </div>
                 </li>
                 @role('Administrador')
-                <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }} ">
+                <li class="nav-item {{ (Route::is('report.*')) ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#report">
                         <i class="fas fa-file"></i>
                         <p>Relatório</p>
@@ -62,7 +62,7 @@
                 </li>
                 @endrole
                 @role('Administrador')
-                <li class="nav-item {{ (Route::is('company.*')) ? 'active' : '' }} ">
+                <li class="nav-item {{ (Route::is('company.*')) ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#company">
                         <i class="fas fa-building"></i>
                         <p>Empresa</p>
@@ -83,7 +83,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ (Route::is('user.*')) ? 'active' : '' }} ">
+                <li class="nav-item {{ (Route::is('user.*')) ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#user">
                         <i class="fas fa-user"></i>
                         <p>Usuario</p>
@@ -97,14 +97,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="overlay-sidebar.html">
+                                <a href="{{ route('user.index') }}">
                                     <span class="sub-item">Listar</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ (Route::is('audit.*')) ? 'active' : '' }}">
                     <a href="{{ route('audit.index') }}">
                         <i class="fas fa-history"></i>
                         <p>Auditoria</p>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,11 +14,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('user.index', ['users' => $users]);
     }
 
     /**
@@ -70,34 +72,60 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+        return view('user.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        try {
+            $data = $request->all();
+            if($data['password'] == null)
+                unset($data['password']);
+            else
+                $data['password'] = Hash::make($data['password']);
+            $user->update($data);
+
+            $user->roles()->detach();
+            $user->assignRole($data['role_id']);
+        } catch (\Exception $exception) {
+            return back()->withInput()->withError('Usuário não atualizado! Verifique com o suporte.');
+        }
+
+        return redirect()->route('user.index')->withSuccess('Usuário atualizado!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return mixed
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        try {
+            if($user->active == true)
+                $user->active = false;
+            else
+                $user->active = true;
+
+            $user->save();
+        } catch (\Exception $exception) {
+            return back()->withInput()->withError('Usuario não alterado! Verifique com o suporte.');
+        }
+
+        return back()->withSuccess('Usuário alterado!');
     }
 }
