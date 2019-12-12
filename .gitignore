@@ -1,11 +1,11 @@
-!/vendor/laravel/framework/src/Illuminate/Routing/Router.php
 /node_modules
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
-/public/img/company/*
-!/vendor/laravel/framework/src/Illuminate/Routing/Router.php
+/public/img/company/*.jpg
+/public/img/company/*.png
+/public/img/company/*.jpeg
 .env
 .env.backup
 .phpunit.result.cache

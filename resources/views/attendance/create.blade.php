@@ -158,10 +158,10 @@
 
 @section('javascript')
     <!-- DateTimePicker -->
-    <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/moment/moment.min.js"></script>
-    <script src="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ asset('/js/plugin/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('/js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
     <!-- Select2 -->
-    <script src="http://demo.themekita.com/atlantis/livepreview/examples/assets/js/plugin/select2/select2.full.min.js"></script>
+    <script src="{{ asset('/js/plugin/select2/select2.full.min.js') }}"></script>
     <script type="text/javascript" src="/js/modules/attendance.js"></script>
     <script type="text/javascript" src="/js/modules/message.js"></script>
     @if( Session::has('error'))

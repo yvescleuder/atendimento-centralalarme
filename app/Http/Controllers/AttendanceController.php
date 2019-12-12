@@ -83,9 +83,9 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        $attendance = $attendance->with(['agent' => function($query) {
+        $attendance = Attendance::with(['agent' => function($query) {
                                             $query->withTrashed();
-                                        }])->first();
+                                        }])->find($attendance->id);
         $companies = Company::all();
         $agents = Agent::all();
         $requesters = Attendance::groupBy('requester')
