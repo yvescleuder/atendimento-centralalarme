@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## SGAV - SISTEMA DE GERENCIAMENTO DE ATENDIMENTOS E VENDAS
+## SGAT - SISTEMA DE GERENCIAMENTO DE ATENDIMENTOS
 
 Este projeto é para benefício da empresa Central Alarme, onde atualmente estou trabalhando.
 
