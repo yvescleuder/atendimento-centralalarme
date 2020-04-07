@@ -9,7 +9,7 @@
 
 ## SGAT - SISTEMA DE GERENCIAMENTO DE ATENDIMENTOS
 
-Este projeto é para benefício da empresa Central Alarme, onde atualmente estou trabalhando.
+Este projeto é para benefício da empresa Central Alarme.
 
 ## PROBLEMATICA
 
